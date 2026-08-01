@@ -38,7 +38,7 @@
     "prepare": "npm run build"
   },
   "engines": {
-    "node": ">=24"
+    "node": ">=22.18"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.4",

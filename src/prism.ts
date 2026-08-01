@@ -5,12 +5,7 @@ type PrismUniforms = {
   uOpacity: { value: number };
 };
 
-type PrismaticMaterial = {
-  fragmentShader: string;
-  transparent: boolean;
-  uniforms: PrismUniforms;
-  dispose(): void;
-};
+type PrismaticMaterial = ShaderMaterial & { uniforms: PrismUniforms };
 
 const vertexShader = /* glsl */ `
 varying vec2 vUv;
@@ -55,5 +50,5 @@ export function createPrismaticMaterial(opacity = 0.7): PrismaticMaterial {
     blending: AdditiveBlending,
     depthWrite: false,
     side: DoubleSide,
-  }) as unknown as PrismaticMaterial;
+  }) as PrismaticMaterial;
 }
