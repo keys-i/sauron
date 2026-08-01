@@ -33,12 +33,18 @@ test("bounds expensive rendering and honors user constraints", () => {
       reducedMotion: true,
     }),
     {
-      pixelRatio: 0.76,
+      pixelRatio: Math.sqrt(1_200_000 / (1920 * 1080)),
       maxFps: 30,
       particleScale: 0,
       expensiveEffects: false,
     },
   );
+  const eightK = selectRenderProfile({
+    width: 7680,
+    height: 4320,
+    devicePixelRatio: 2,
+  });
+  assert.ok(7680 * 4320 * eightK.pixelRatio ** 2 <= 2_400_000);
 });
 
 test("paces frames and configures renderer-shaped objects", () => {

@@ -12,12 +12,12 @@ Generated from `tools/config/techniques.json` by `npm run rank:write`. LOC, tran
 | 4 | [Grid tile patterns](https://offscreencanvas.com/issues/grid-tile-patterns/) | 89 | 78.1 | pass · candidate | Use a CSS gradient for flat page grids; reserve WebGL for real depth. |
 | 5 | [Ripples, waves and fakes](https://offscreencanvas.com/issues/ripples-waves-and-fakes/) | 90 | 74.4 | pass · retain | Reuse the site's fading CanvasTexture touch maps and disable them for reduced motion. |
 | 6 | [WebGL particle systems](https://offscreencanvas.com/issues/001/) | 93 | 72 | pass · retain | Refine the existing 150-point, one-draw star field before adding GPGPU particles. |
-| 7 | [Generative shader colour palettes](https://offscreencanvas.com/issues/generative-shader-color-palettes/) | 100 | 70.5 | pass · ship | Use the asset-free cosine palette in Sauron's single prism material. |
-| 8 | [Shaders and gradients](https://offscreencanvas.com/issues/002/) | 94 | 69.9 | pass · candidate | Use UV and radial gradients inside an existing material, not a shader framework. |
-| 9 | [In circles and spheres](https://offscreencanvas.com/issues/in-circles-and-spheres/) | 90 | 69.7 | pass · candidate | Use sin/cos layouts and instancing for sparse orbs; add no layout system. |
-| 10 | [WebGL wireframes](https://offscreencanvas.com/issues/webgl-wireframes/) | 84 | 69.5 | pass · candidate | Use Three's built-in wireframe or edges for a brief technical reveal. |
-| 11 | [Cel/toon shading](https://offscreencanvas.com/issues/015/) | 91 | 68.9 | pass · candidate | Use one stock toon or quantized accent if the art direction calls for it. |
-| 12 | [GLSL dithering](https://offscreencanvas.com/issues/glsl-dithering/) | 94 | 67.2 | pass · candidate | Apply subtle dithering to one accent material, never readable copy. |
+| 7 | [Shaders and gradients](https://offscreencanvas.com/issues/002/) | 94 | 69.9 | pass · candidate | Use UV and radial gradients inside an existing material, not a shader framework. |
+| 8 | [In circles and spheres](https://offscreencanvas.com/issues/in-circles-and-spheres/) | 90 | 69.7 | pass · candidate | Use sin/cos layouts and instancing for sparse orbs; add no layout system. |
+| 9 | [WebGL wireframes](https://offscreencanvas.com/issues/webgl-wireframes/) | 84 | 69.5 | pass · candidate | Use Three's built-in wireframe or edges for a brief technical reveal. |
+| 10 | [Cel/toon shading](https://offscreencanvas.com/issues/015/) | 91 | 68.9 | pass · candidate | Use one stock toon or quantized accent if the art direction calls for it. |
+| 11 | [GLSL dithering](https://offscreencanvas.com/issues/glsl-dithering/) | 94 | 67.2 | pass · candidate | Apply subtle dithering to one accent material, never readable copy. |
+| 12 | [Generative shader colour palettes](https://offscreencanvas.com/issues/generative-shader-color-palettes/) | 88 | 62 | pass · ship | Use the asset-free cosine palette in Sauron's single prism material. |
 | 13 | [Vertex buffer animations](https://offscreencanvas.com/issues/vertex-buffer-animations/) | 85 | 56.3 | pass · defer | Move per-point animation to attributes only after profiling finds a CPU bottleneck. |
 | 14 | [Fragment shader art](https://offscreencanvas.com/issues/fragment-shader-art/) | 82 | 53.2 | pass · candidate | One simple background is viable; a shader-art engine is not. |
 | 15 | [Beautiful demos with matcaps](https://offscreencanvas.com/issues/016/) | 90 | 50.7 | pass · candidate | Use one compressed matcap only when a decorative model needs fixed stylised light. |

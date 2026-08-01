@@ -18,6 +18,8 @@ const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
 const finite = (value: number, fallback: number) =>
   Number.isFinite(value) ? value : fallback;
+const cssPixels = (width: number, height: number) =>
+  Math.max(1, finite(width, 1)) * Math.max(1, finite(height, 1));
 
 /** Keeps fill-rate bounded while preserving sharp output on small screens. */
 export function selectRenderProfile({
@@ -30,17 +32,14 @@ export function selectRenderProfile({
 }: RenderHints): RenderProfile {
   const constrained =
     reducedMotion || saveData || finite(hardwareConcurrency, 8) <= 4;
-  const cssPixels =
-    Math.max(1, finite(width, 1)) * Math.max(1, finite(height, 1));
+  const pixelCount = cssPixels(width, height);
   const pixelBudget = constrained ? 1_200_000 : 2_400_000;
-  const pixelRatio = clamp(
-    Math.sqrt(pixelBudget / cssPixels),
-    0.5,
-    clamp(finite(devicePixelRatio, 1), 0.5, 2),
-  );
+  const requestedRatio = finite(devicePixelRatio, 1);
+  const deviceRatio = requestedRatio > 0 ? Math.min(requestedRatio, 2) : 1;
+  const pixelRatio = Math.min(deviceRatio, Math.sqrt(pixelBudget / pixelCount));
 
   return {
-    pixelRatio: Math.round(pixelRatio * 100) / 100,
+    pixelRatio,
     maxFps: constrained ? 30 : 60,
     particleScale: reducedMotion ? 0 : constrained ? 0.5 : 1,
     expensiveEffects: !constrained,
@@ -73,7 +72,14 @@ export function configureRenderer(
   width: number,
   height: number,
 ) {
-  renderer.setPixelRatio(clamp(finite(profile.pixelRatio, 1), 0.5, 2));
+  const requestedRatio = finite(profile.pixelRatio, 1);
+  renderer.setPixelRatio(
+    Math.min(
+      requestedRatio > 0 ? requestedRatio : 1,
+      2,
+      Math.sqrt(2_400_000 / cssPixels(width, height)),
+    ),
+  );
   renderer.setSize(width, height, false);
   return renderer;
 }
