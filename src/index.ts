@@ -21,6 +21,20 @@ const finite = (value: number, fallback: number) =>
 const cssPixels = (width: number, height: number) =>
   Math.max(1, finite(width, 1)) * Math.max(1, finite(height, 1));
 
+/** Fits a positive device-pixel ratio inside an absolute drawing-pixel budget. */
+export function fitPixelRatio(
+  width: number,
+  height: number,
+  pixelBudget: number,
+  maxPixelRatio = 2,
+) {
+  const requestedRatio = finite(maxPixelRatio, 2);
+  return Math.min(
+    requestedRatio > 0 ? requestedRatio : 1,
+    Math.sqrt(Math.max(1, finite(pixelBudget, 1)) / cssPixels(width, height)),
+  );
+}
+
 /** Keeps fill-rate bounded while preserving sharp output on small screens. */
 export function selectRenderProfile({
   width,
@@ -32,11 +46,10 @@ export function selectRenderProfile({
 }: RenderHints): RenderProfile {
   const constrained =
     reducedMotion || saveData || finite(hardwareConcurrency, 8) <= 4;
-  const pixelCount = cssPixels(width, height);
   const pixelBudget = constrained ? 1_200_000 : 2_400_000;
   const requestedRatio = finite(devicePixelRatio, 1);
   const deviceRatio = requestedRatio > 0 ? Math.min(requestedRatio, 2) : 1;
-  const pixelRatio = Math.min(deviceRatio, Math.sqrt(pixelBudget / pixelCount));
+  const pixelRatio = fitPixelRatio(width, height, pixelBudget, deviceRatio);
 
   return {
     pixelRatio,
@@ -74,28 +87,13 @@ export function configureRenderer(
 ) {
   const requestedRatio = finite(profile.pixelRatio, 1);
   renderer.setPixelRatio(
-    Math.min(
-      requestedRatio > 0 ? requestedRatio : 1,
-      2,
-      Math.sqrt(2_400_000 / cssPixels(width, height)),
+    fitPixelRatio(
+      width,
+      height,
+      2_400_000,
+      Math.min(requestedRatio > 0 ? requestedRatio : 1, 2),
     ),
   );
   renderer.setSize(width, height, false);
   return renderer;
-}
-
-type WorkerLike = {
-  postMessage(message: unknown, transfer: Transferable[]): void;
-};
-
-/** Transfers ownership once; callers retain their own scene/message protocol. */
-export function transferCanvasToWorker(
-  canvas: HTMLCanvasElement,
-  worker: WorkerLike,
-  data: Record<string, unknown> = {},
-) {
-  if (!("transferControlToOffscreen" in canvas)) return false;
-  const offscreen = canvas.transferControlToOffscreen();
-  worker.postMessage({ ...data, canvas: offscreen }, [offscreen]);
-  return true;
 }

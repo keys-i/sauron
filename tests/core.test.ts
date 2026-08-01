@@ -3,11 +3,14 @@ import test from "node:test";
 import {
   configureRenderer,
   createFrameGate,
+  fitPixelRatio,
   selectRenderProfile,
-  transferCanvasToWorker,
 } from "../src/index.ts";
 
 test("bounds expensive rendering and honors user constraints", () => {
+  assert.ok(
+    7680 * 4320 * fitPixelRatio(7680, 4320, 2_400_000, 2) ** 2 <= 2_400_000,
+  );
   assert.deepEqual(
     selectRenderProfile({ width: 390, height: 844, devicePixelRatio: 3 }),
     {
@@ -65,23 +68,4 @@ test("paces frames and configures renderer-shaped objects", () => {
 
   configureRenderer(renderer, { ...profile, pixelRatio: 99 }, 800, 600);
   assert.deepEqual(calls.at(-2), ["ratio", 2]);
-});
-
-test("transfers supported canvases without prescribing a worker protocol", () => {
-  const messages: unknown[] = [];
-  const offscreen = {} as OffscreenCanvas;
-  const canvas = {
-    transferControlToOffscreen: () => offscreen,
-  } as HTMLCanvasElement;
-  assert.equal(
-    transferCanvasToWorker(
-      canvas,
-      { postMessage: (...args) => messages.push(args) },
-      { effect: "cloth" },
-    ),
-    true,
-  );
-  assert.deepEqual(messages, [
-    [{ effect: "cloth", canvas: offscreen }, [offscreen]],
-  ]);
 });

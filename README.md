@@ -50,7 +50,7 @@ It is one draw, has no texture asset, and can be frozen at time `0` for reduced 
 
 ## Worker and Rust boundaries
 
-`transferCanvasToWorker` only transfers canvas ownership. The application still owns its worker protocol, events, resizing, and teardown. Moving work to a worker changes CPU scheduling; it does not reduce GPU fragment cost.
+Use the native `canvas.transferControlToOffscreen()` when a measured CPU bottleneck justifies a worker. The application still owns its protocol, events, resizing, and teardown; a worker does not reduce GPU fragment cost.
 
 `crates/core` is an experimental Rust particle kernel exercised by CI and excluded from the npm package. It should remain unshipped until an end-to-end browser benchmark beats the TypeScript path after WASM boundary and download costs.
 
