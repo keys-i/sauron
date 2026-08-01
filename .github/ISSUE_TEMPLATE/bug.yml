@@ -1,0 +1,35 @@
+name: Bug report
+description: Report a reproducible defect.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Include the smallest reproduction and expected behaviour.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Sauron and Three.js versions
+      placeholder: "Sauron 0.1.0; Three r177"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, GPU, device, reduced-motion setting, and relevant console output.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I removed private data and credentials.
+          required: true
+        - label: I searched existing issues.
+          required: true

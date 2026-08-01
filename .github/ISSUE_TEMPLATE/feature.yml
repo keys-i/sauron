@@ -1,0 +1,26 @@
+name: Feature proposal
+description: Propose a measured rendering need.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Consumer problem
+      description: Name the real site or library path and the limitation being measured.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and budget
+      description: Include before/after LOC, raw/gzip bytes, frame p50/p95, draw calls, and fallback needs.
+    validations:
+      required: true
+  - type: textarea
+    id: simpler
+    attributes:
+      label: Simpler options considered
+      description: Explain why Three.js, CSS, the browser platform, or consumer-local code is insufficient.
+    validations:
+      required: true

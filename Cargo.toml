@@ -1,0 +1,17 @@
+[package]
+name = "sauron-effects-core"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "Optional, profiled compute kernels for @uqrealitylabs/sauron"
+repository = "https://github.com/keys-i/sauron"
+
+[lib]
+path = "crates/core/src/lib.rs"
+crate-type = ["cdylib", "rlib"]
+
+[features]
+wasm = ["dep:wasm-bindgen"]
+
+[dependencies]
+wasm-bindgen = { version = "0.2.126", optional = true }
