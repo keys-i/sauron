@@ -41,11 +41,11 @@
     "node": ">=22.18"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.4",
-    "@types/node": "^24.10.0",
+    "@biomejs/biome": "^2.5.7",
+    "@types/node": "^26.1.2",
     "@types/three": "^0.177.0",
-    "three": "^0.177.0",
-    "typescript": "^5.9.3"
+    "three": "^0.185.1",
+    "typescript": "^7.0.2"
   },
   "peerDependencies": {
     "three": ">=0.177 <0.186"
